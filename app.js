@@ -82,6 +82,16 @@ app.put('/campgrounds/:id', async(req, res) =>{
 })
 
 
+//deleting camp
+app.delete('/campgrounds/:id', async(req,res) => {
+    //camp by id
+    const {id} = req.params;
+    //find and delete from db
+    const camp = await Campground.findByIdAndDelete(id);
+    res.redirect('/campgrounds');
+})
+
+
 app.listen(3000, ()=>{
     console.log('App is listening on 3000 port.')
 })
