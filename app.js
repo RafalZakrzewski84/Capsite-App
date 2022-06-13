@@ -28,6 +28,13 @@ app.get('/', (req,res) => {
     res.send('hello word')
 })
 
+//test for making new camp in db
+app.get('/makecampground', async (req,res) => {
+    const camp = new Campground ({title: 'Namioty u Zibiego', description: 'Najlepsze miejsce na pomorzu'})
+    await camp.save()
+    res.send(camp);
+})
+
 app.listen(3000, ()=>{
     console.log('App is listening on 3000 port.')
 })
