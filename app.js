@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const { read } = require('fs');
@@ -27,6 +28,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 //for parsing data form page forms
 app.use(express.urlencoded({extended: true}));
+//we can change methods from browser 
+app.use(methodOverride('_method'));
 
 //basic page
 app.get('/', (req,res) => {
@@ -61,6 +64,21 @@ app.get('/campgrounds/:id', async (req,res) => {
     const {id} = req.params;
     const camp = await Campground.findById(id);
     res.render('campgrounds/show', {camp});
+})
+
+
+//editing existing camp
+app.get('/campgrounds/:id/edit', async(req,res) => {
+    const camp = await Campground.findById(req.params.id);
+    res.render('campgrounds/edit', {camp});
+})
+//updating particular camp and show details
+app.put('/campgrounds/:id', async(req, res) =>{
+    //id of camp for update
+    const {id} = req.params;
+    //finding and updating camp with new data from edit form
+    const camp = await Campground.findByIdAndUpdate(id, {...req.body.campground});
+    res.redirect(`/campgrounds/${camp._id}`)
 })
 
 

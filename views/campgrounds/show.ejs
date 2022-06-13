@@ -12,7 +12,12 @@
     <p><%= camp.location%></p>
 
     <footer>
-      <a href="/campgrounds">All Campgrounds</a>
+      <div>
+        <a href="/campgrounds/<%= camp._id%>/edit">Edit Campground</a>
+      </div>
+      <div>
+        <a href="/campgrounds">All Campgrounds</a>
+      </div>
     </footer>
   </body>
 </html>
