@@ -12,4 +12,4 @@ const CampgroundSchema = new Schema({
 });
 
 //setting and exporting mongoose model
-module.exports = mongosose.model('Campground', CampgroundSchema);
+module.exports = mongoose.model('Campground', CampgroundSchema);
