@@ -48,7 +48,9 @@ app.get('/campgrounds/new', (req, res) => {
 })
 //data from form from new camp page
 app.post('/campgrounds', async (req,res) => {
+    //new campground with data from from
     const camp = new Campground(req.body.campground);
+    //saving new camp to db
     await camp.save();
     res.redirect(`/campgrounds/${camp._id}`)
 })
