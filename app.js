@@ -24,16 +24,19 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+//basic page
 app.get('/', (req,res) => {
     res.send('hello word')
 })
 
-//test for making new camp in db
-app.get('/makecampground', async (req,res) => {
-    const camp = new Campground ({title: 'Namioty u Zibiego', description: 'Najlepsze miejsce na pomorzu'})
-    await camp.save()
-    res.send(camp);
+//basic routes
+
+//list of all campgrounds
+app.get('/campgrounds', async (req,res) => {
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index', {campgrounds});
 })
+
 
 app.listen(3000, ()=>{
     console.log('App is listening on 3000 port.')
