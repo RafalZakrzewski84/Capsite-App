@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
+const { read } = require('fs');
 
 
 //connecting to mongoDB working on localhost
@@ -24,6 +25,9 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+//for parsing data form page forms
+app.use(express.urlencoded({extended: true}));
+
 //basic page
 app.get('/', (req,res) => {
     res.send('hello word')
@@ -36,6 +40,19 @@ app.get('/campgrounds', async (req,res) => {
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', {campgrounds});
 })
+
+
+//page for adding new campground (before :id to prewent trigering .findById('new'))
+app.get('/campgrounds/new', (req, res) => {
+    res.render('campgrounds/new')
+})
+//data from form from new camp page
+app.post('/campgrounds', async (req,res) => {
+    const camp = new Campground(req.body.campground);
+    await camp.save();
+    res.redirect(`/campgrounds/${camp._id}`)
+})
+
 
 //page with detailed information about comp
 app.get('/campgrounds/:id', async (req,res) => {
