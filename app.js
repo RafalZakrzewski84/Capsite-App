@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
+const ejsMateEngine = require('ejs-mate');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
-const { read } = require('fs');
+
 
 
 //connecting to mongoDB working on localhost
@@ -23,6 +24,8 @@ db.once("open", () => {
 //express app
 const app = express();
 
+//setting engine to ejs and directory path to views
+app.engine('ejs', ejsMateEngine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
