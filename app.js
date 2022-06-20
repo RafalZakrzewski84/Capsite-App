@@ -1,8 +1,16 @@
 const express = require('express');
 const path = require('path');
+
+//adding layouts
 const ejsMateEngine = require('ejs-mate');
+
+//override methods in forms from
 const methodOverride = require('method-override');
+
+//importing mongoose
 const mongoose = require('mongoose');
+
+//importing db schema
 const Campground = require('./models/campground');
 
 
