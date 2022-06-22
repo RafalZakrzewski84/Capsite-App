@@ -4,6 +4,9 @@ const path = require("path");
 //adding layouts
 const ejsMateEngine = require("ejs-mate");
 
+//adding joi - package for validating data from forms
+const Joi = require("joi");
+
 //adding error class - catchAsync is wrapping every async function in code below
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
@@ -43,6 +46,31 @@ app.use(express.urlencoded({ extended: true }));
 //we can change methods from browser
 app.use(methodOverride("_method"));
 
+//function for validating camp data using Joi schema
+const validateCampground = (req, res, next) => {
+  const campgroundSchemaNewForm = Joi.object({
+    campground: Joi.object({
+      title: Joi.string().required(),
+      location: Joi.string().required(),
+      image: Joi.string().required(),
+      price: Joi.number().min(1).required(),
+      description: Joi.string().required(),
+    }).required(),
+  });
+
+  //Joi function for validating Joi schema
+  const { error } = campgroundSchemaNewForm.validate(req.body);
+  // console.log(error.details);
+
+  //generating error if validation failed
+  if (error) {
+    const errorValidationMsg = error.details.map((el) => el.message).join("; ");
+    throw new ExpressError(errorValidationMsg, 400);
+  } else {
+    next();
+  }
+};
+
 //basic page
 app.get("/", (req, res) => {
   res.render("home");
@@ -63,13 +91,11 @@ app.get(
 app.get("/campgrounds/new", (req, res) => {
   res.render("campgrounds/new");
 });
-//data from form from new camp page
+//data from form - new camp page
 app.post(
   "/campgrounds",
+  validateCampground,
   catchAsync(async (req, res, next) => {
-    //generating error if req.body.campground doesn't exist
-    if (!req.body.campground)
-      throw new ExpressError("Invalid Campground Data", 400);
     //new campground with data from from
     const camp = new Campground(req.body.campground);
     //saving new camp to db
@@ -100,6 +126,7 @@ app.get(
 //updating particular camp and show details
 app.put(
   "/campgrounds/:id",
+  validateCampground,
   catchAsync(async (req, res) => {
     //id of camp for update
     const { id } = req.params;
