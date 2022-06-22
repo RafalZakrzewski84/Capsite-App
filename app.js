@@ -45,7 +45,7 @@ app.use(methodOverride("_method"));
 
 //basic page
 app.get("/", (req, res) => {
-  res.send("hello word");
+  res.render("home");
 });
 
 //basic routes
