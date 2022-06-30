@@ -202,7 +202,7 @@ app.delete(
 		const camp = await Campground.findByIdAndUpdate(id, {
 			$pull: { reviews: reviewId },
 		});
-		console.log(camp);
+		console.log(id);
 		//deleting review from db by its id taken from url
 		await Review.findOneAndDelete(reviewId);
 
