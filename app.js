@@ -144,7 +144,7 @@ app.delete(
 app.post(
 	'/campgrounds/:id/reviews',
 	catchAsync(async (req, res) => {
-		console.log('review created');
+		res.send('review created');
 	})
 );
 
