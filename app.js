@@ -206,7 +206,7 @@ app.delete(
 		await Review.findOneAndDelete(reviewId);
 
 		// console.log(req.params);
-		res.redirect(`/campgrounds/${camp._id}`);
+		res.redirect(`/campgrounds/${id}`);
 	})
 );
 
