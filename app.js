@@ -18,8 +18,10 @@ const methodOverride = require('method-override');
 //importing mongoose
 const mongoose = require('mongoose');
 
-//importing db schema
+//importing mongoose schemas
 const Campground = require('./models/campground');
+const Review = require('./models/review');
+const campground = require('./models/campground');
 
 //connecting to mongoDB working on localhost
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
@@ -27,6 +29,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
+
 //notification if we are connected to db
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -42,6 +45,7 @@ app.engine('ejs', ejsMateEngine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+//app middleware
 //for parsing data form page forms
 app.use(express.urlencoded({ extended: true }));
 //we can change methods from browser
@@ -62,18 +66,20 @@ const validateCampground = (req, res, next) => {
 	}
 };
 
-//basic page
+//BASIC PAGE
 app.get('/', (req, res) => {
 	res.render('home');
 });
 
-//basic routes
-
+//BASIC ROUTE
 //list of all campgrounds
 app.get(
 	'/campgrounds',
 	catchAsync(async (req, res) => {
+		//finding all campground in db
 		const campgrounds = await Campground.find({});
+
+		//render page with all campgrounds
 		res.render('campgrounds/index', { campgrounds });
 	})
 );
@@ -89,8 +95,10 @@ app.post(
 	catchAsync(async (req, res, next) => {
 		//new campground with data from from
 		const camp = new Campground(req.body.campground);
+
 		//saving new camp to db
 		await camp.save();
+
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
@@ -100,7 +108,11 @@ app.get(
 	'/campgrounds/:id',
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
+
+		//finding campground in db by it id - id come from url (req.params)
 		const camp = await Campground.findById(id);
+
+		//rendering page with camp details
 		res.render('campgrounds/show', { camp });
 	})
 );
@@ -111,6 +123,7 @@ app.get(
 	catchAsync(async (req, res) => {
 		//opening camp page by camp id
 		const camp = await Campground.findById(req.params.id);
+
 		res.render('campgrounds/edit', { camp });
 	})
 );
@@ -121,10 +134,12 @@ app.put(
 	catchAsync(async (req, res) => {
 		//id of camp for update
 		const { id } = req.params;
+
 		//finding and updating camp with new data from edit form
 		const camp = await Campground.findByIdAndUpdate(id, {
 			...req.body.campground,
 		});
+
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
@@ -141,10 +156,24 @@ app.delete(
 	})
 );
 
+//posting new review for camp
 app.post(
 	'/campgrounds/:id/reviews',
 	catchAsync(async (req, res) => {
-		res.send('review created');
+		//finding camp by id
+		const camp = await Campground.findById(req.params.id);
+
+		//creating review data from form
+		const review = new Review(req.body.review);
+
+		//adding review id to campground doc in db
+		camp.reviews.push(review);
+
+		//saving docs in db
+		await review.save();
+		await campground.save();
+
+		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
 
