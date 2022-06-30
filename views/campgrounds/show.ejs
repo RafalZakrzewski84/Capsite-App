@@ -60,5 +60,10 @@
 			</div>
 			<button class="btn btn-success">Submit</button>
 		</form>
+		<div class="mb-3">
+			<% for(let review of camp.reviews) { %>
+			<p><%= review.body%> - Rating: <%=review.rating%></p>
+			<%}%>
+		</div>
 	</div>
 </div>

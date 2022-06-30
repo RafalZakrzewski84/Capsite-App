@@ -125,7 +125,8 @@ app.get(
 		const { id } = req.params;
 
 		//finding campground in db by it id - id come from url (req.params)
-		const camp = await Campground.findById(id);
+		//populating reviews data
+		const camp = await Campground.findById(id).populate('reviews');
 
 		//rendering page with camp details
 		res.render('campgrounds/show', { camp });
