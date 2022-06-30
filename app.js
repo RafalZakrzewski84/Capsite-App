@@ -141,6 +141,13 @@ app.delete(
 	})
 );
 
+app.post(
+	'/campgrounds/:id/reviews',
+	catchAsync(async (req, res) => {
+		console.log('review created');
+	})
+);
+
 //Error, if route doesn't match to paths above
 app.all('*', (req, res, next) => {
 	next(new ExpressError('Page Not Found', 404));
