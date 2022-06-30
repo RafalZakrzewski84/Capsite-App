@@ -6,7 +6,7 @@ const ejsMateEngine = require('ejs-mate');
 
 //adding joi and joi schemas - package for validating data from forms
 const Joi = require('joi');
-const { campgroundJoiSchema } = require('./utils/schemasJOI');
+const { campgroundJoiSchema, reviewJoiSchema } = require('./utils/schemasJOI');
 
 //adding error class - catchAsync is wrapping every async function in code below
 const catchAsync = require('./utils/catchAsync');
@@ -53,8 +53,23 @@ app.use(methodOverride('_method'));
 
 //function for validating camp data using Joi schema
 const validateCampground = (req, res, next) => {
-	//Joi function for validating Joi schema
+	//Joi function for validating campground Joi schema
 	const { error } = campgroundJoiSchema.validate(req.body);
+	// console.log(error.details);
+
+	//generating error if validation failed
+	if (error) {
+		const errorValidationMsg = error.details.map((el) => el.message).join('; ');
+		throw new ExpressError(errorValidationMsg, 400);
+	} else {
+		next();
+	}
+};
+
+//function for validating review data using Joi schema
+const validateReview = (req, res, next) => {
+	//Joi function for validating review Joi schema
+	const { error } = reviewJoiSchema.validate(req.body);
 	// console.log(error.details);
 
 	//generating error if validation failed
@@ -159,6 +174,7 @@ app.delete(
 //posting new review for camp
 app.post(
 	'/campgrounds/:id/reviews',
+	validateReview,
 	catchAsync(async (req, res) => {
 		//finding camp by id
 		const camp = await Campground.findById(req.params.id);
