@@ -196,7 +196,7 @@ app.post(
 
 //deleting review route
 app.delete(
-	'campgrounds/:id/reviews/:reviewId',
+	'/campgrounds/:id/reviews/:reviewId',
 	catchAsync(async (req, res) => {
 		console.log(req.params);
 		res.send('review deleted');
