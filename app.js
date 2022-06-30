@@ -21,7 +21,6 @@ const mongoose = require('mongoose');
 //importing mongoose schemas
 const Campground = require('./models/campground');
 const Review = require('./models/review');
-const campground = require('./models/campground');
 
 //connecting to mongoDB working on localhost
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
@@ -200,13 +199,15 @@ app.delete(
 	catchAsync(async (req, res) => {
 		const { id, reviewId } = req.body;
 		//removing review id from campground reviews
-		await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+		const camp = await Campground.findByIdAndUpdate(id, {
+			$pull: { reviews: reviewId },
+		});
 
 		//deleting review from db by its id taken from url
 		await Review.findOneAndDelete(reviewId);
 
 		// console.log(req.params);
-		res.redirect(`/campgrounds/${id}`);
+		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
 
