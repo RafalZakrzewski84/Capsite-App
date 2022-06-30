@@ -198,7 +198,8 @@ app.post(
 app.delete(
 	'campgrounds/:id/reviews/:reviewId',
 	catchAsync(async (req, res) => {
-		res.send(req.params);
+		console.log(req.params);
+		res.send('review deleted');
 	})
 );
 
