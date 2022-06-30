@@ -197,7 +197,7 @@ app.post(
 app.delete(
 	'/campgrounds/:id/reviews/:reviewId',
 	catchAsync(async (req, res) => {
-		const { id, reviewId } = req.body;
+		const { id, reviewId } = req.params;
 		//removing review id from campground reviews
 		const camp = await Campground.findByIdAndUpdate(id, {
 			$pull: { reviews: reviewId },
