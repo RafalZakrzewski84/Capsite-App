@@ -1,32 +1,44 @@
 <%layout('/layouts/boilerplate')%>
 
 <div class="row">
-  <div class="col-6 offset-3">
-    <div class="card mb-3">
-      <img src="<%= camp.image%>" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title"><%= camp.title%></h5>
-        <p class="card-text"><%=camp.description%></p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Location: <%= camp.location%></li>
-        <li class="list-group-item">Price: <%= camp.price%> USD/night</li>
-      </ul>
-      <div class="card-body">
-        <a href="/campgrounds/<%= camp._id%>/edit" class="btn btn-info"
-          >Edit Campground</a
-        >
-        <form
-          class="d-inline"
-          action="/campgrounds/<%=camp._id%>?_method=DELETE"
-          method="POST"
-        >
-          <button class="btn btn-danger">Delete Campground</button>
-        </form>
-      </div>
-      <div class="card-footer text-muted">
-        <a href="/campgrounds" class="card-link">All Campgrounds</a>
-      </div>
-    </div>
-  </div>
+	<div class="col-6 offset-3">
+		<div class="card mb-3">
+			<img src="<%= camp.image%>" class="card-img-top" alt="..." />
+			<div class="card-body">
+				<h5 class="card-title"><%= camp.title%></h5>
+				<p class="card-text"><%=camp.description%></p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Location: <%= camp.location%></li>
+				<li class="list-group-item">Price: <%= camp.price%> USD/night</li>
+			</ul>
+			<div class="card-body">
+				<a href="/campgrounds/<%= camp._id%>/edit" class="btn btn-info"
+					>Edit Campground</a
+				>
+				<form
+					class="d-inline"
+					action="/campgrounds/<%=camp._id%>?_method=DELETE"
+					method="POST"
+				>
+					<button class="btn btn-danger">Delete Campground</button>
+				</form>
+			</div>
+			<div class="card-footer text-muted">
+				<a href="/campgrounds" class="card-link">All Campgrounds</a>
+			</div>
+		</div>
+		<form action="">
+			<div class="mb-3">
+				<label class="form-label" for="body">Review</label>
+				<textarea
+					class="form-control"
+					name="review[body]"
+					id="body"
+					cols="30"
+					rows="10"
+				></textarea>
+			</div>
+		</form>
+	</div>
 </div>
