@@ -171,7 +171,7 @@ app.post(
 
 		//saving docs in db
 		await review.save();
-		await campground.save();
+		await camp.save();
 
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
