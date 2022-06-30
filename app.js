@@ -194,6 +194,14 @@ app.post(
 	})
 );
 
+//deleting review route
+app.delete(
+	'campgrounds/:id/reviews/:reviewId',
+	catchAsync(async (req, res) => {
+		res.send(req.params);
+	})
+);
+
 //Error, if route doesn't match to paths above
 app.all('*', (req, res, next) => {
 	next(new ExpressError('Page Not Found', 404));
