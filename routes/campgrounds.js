@@ -10,6 +10,9 @@ const ExpressError = require('../utils/ExpressError');
 //importing mongoose schemas
 const Campground = require('../models/campground');
 
+//adding joi schema - package for validating data from forms
+const { campgroundJoiSchema } = require('../utils/schemasJOI');
+
 //function for validating camp data using Joi schema
 const validateCampground = (req, res, next) => {
 	//Joi function for validating campground Joi schema
