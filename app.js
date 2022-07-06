@@ -25,7 +25,7 @@ const Campground = require('./models/campground');
 const Review = require('./models/review');
 
 //importing routes
-const campground = require('./routes/campgrounds');
+const campgrounds = require('./routes/campgrounds');
 
 //connecting to mongoDB working on localhost
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
