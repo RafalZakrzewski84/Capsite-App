@@ -2,7 +2,10 @@
 
 const express = require('express');
 const path = require('path');
+
+//adding session and flash to app
 const session = require('express-session');
+const flash = require('connect-flash');
 
 //adding layouts
 const ejsMateEngine = require('ejs-mate');
@@ -45,10 +48,13 @@ app.set('views', path.join(__dirname, 'views'));
 //app middleware
 //for parsing data form page forms
 app.use(express.urlencoded({ extended: true }));
+
 //we can change from browser methods
 app.use(methodOverride('_method'));
+
 //using public directory with js files
 app.use(express.static(path.join(__dirname, 'public')));
+
 //adding session to app
 const sessionConfig = {
 	secret: 'sessionSecret',
@@ -64,9 +70,18 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 
+//setting flash middleware
+app.use(flash());
+
 //BASIC PAGE
 app.get('/', (req, res) => {
 	res.render('home');
+});
+
+//setting flash middleware
+app.use((req, res, next) => {
+	res.locals.success = req.flash('success');
+	next();
 });
 
 //campgrounds routes

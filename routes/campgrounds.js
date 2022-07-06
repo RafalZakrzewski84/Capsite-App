@@ -56,6 +56,8 @@ router.post(
 		//saving new camp to db
 		await camp.save();
 
+		//flash msq
+		req.flash('success', 'New Campground Added');
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
