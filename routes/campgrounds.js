@@ -72,6 +72,11 @@ router.get(
 		//populating reviews data
 		const camp = await Campground.findById(id).populate('reviews');
 
+		//show flash error msg when campground not found
+		if (!camp) {
+			req.flash('error', 'Campground Not Found');
+			return res.redirect('/campgrounds');
+		}
 		//rendering page with camp details
 		res.render('campgrounds/show', { camp });
 	})
@@ -84,6 +89,11 @@ router.get(
 		//opening camp page by camp id
 		const camp = await Campground.findById(req.params.id);
 
+		//show flash error msg when campground not found
+		if (!camp) {
+			req.flash('error', 'Campground Not Found');
+			return res.redirect('/campgrounds');
+		}
 		res.render('campgrounds/edit', { camp });
 	})
 );
@@ -99,6 +109,8 @@ router.put(
 		const camp = await Campground.findByIdAndUpdate(id, {
 			...req.body.campground,
 		});
+
+		//flash msq
 		req.flash('success', 'Campground Edited Successfully');
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
@@ -112,6 +124,8 @@ router.delete(
 		const { id } = req.params;
 		//find and delete from db
 		const camp = await Campground.findByIdAndDelete(id);
+
+		//flash msq
 		req.flash('success', 'Campground Successfully Deleted');
 		res.redirect('/campgrounds');
 	})

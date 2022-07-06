@@ -47,6 +47,8 @@ router.post(
 		//saving docs in db
 		await review.save();
 		await camp.save();
+
+		//flash msq
 		req.flash('success', 'New Review Added');
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
@@ -66,6 +68,8 @@ router.delete(
 		await Review.findOneAndDelete(reviewId);
 
 		// console.log(req.params);
+
+		//flash msq
 		req.flash('success', 'Review Successfully Deleted');
 		res.redirect(`/campgrounds/${camp._id}`);
 	})
