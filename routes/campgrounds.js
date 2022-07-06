@@ -56,7 +56,7 @@ router.post(
 		//saving new camp to db
 		await camp.save();
 
-		res.redirect(`/campgrounds/${camp._id}`);
+		res.redirect(`/${camp._id}`);
 	})
 );
 
@@ -98,7 +98,7 @@ router.put(
 			...req.body.campground,
 		});
 
-		res.redirect(`/campgrounds/${camp._id}`);
+		res.redirect(`/${camp._id}`);
 	})
 );
 
@@ -110,7 +110,7 @@ router.delete(
 		const { id } = req.params;
 		//find and delete from db
 		const camp = await Campground.findByIdAndDelete(id);
-		res.redirect('/campgrounds');
+		res.redirect('/');
 	})
 );
 
