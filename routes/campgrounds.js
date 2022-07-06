@@ -42,7 +42,7 @@ router.get(
 );
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
-router.get('/campgrounds/new', (req, res) => {
+router.get('/new', (req, res) => {
 	res.render('campgrounds/new');
 });
 //data from form - new camp page
@@ -56,7 +56,7 @@ router.post(
 		//saving new camp to db
 		await camp.save();
 
-		res.redirect(`/${camp._id}`);
+		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
 
@@ -98,7 +98,7 @@ router.put(
 			...req.body.campground,
 		});
 
-		res.redirect(`/${camp._id}`);
+		res.redirect(`/campgrounds/${camp._id}`);
 	})
 );
 
@@ -110,7 +110,7 @@ router.delete(
 		const { id } = req.params;
 		//find and delete from db
 		const camp = await Campground.findByIdAndDelete(id);
-		res.redirect('/');
+		res.redirect('/campgrounds');
 	})
 );
 
