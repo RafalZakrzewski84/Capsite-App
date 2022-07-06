@@ -54,6 +54,13 @@ const sessionConfig = {
 	secret: 'sessionSecret',
 	resave: false,
 	saveUninitialized: true,
+	//adding cookies
+	cookie: {
+		httpOnly: true,
+		//current day + 7 days in milliseconds
+		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+		maxAge: 1000 * 60 * 60 * 24 * 7,
+	},
 };
 app.use(session(sessionConfig));
 
