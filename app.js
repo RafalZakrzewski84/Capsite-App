@@ -41,6 +41,9 @@ app.engine('ejs', ejsMateEngine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+//using public directory with js files
+app.use(exspress.status(path.join(__dirname, 'public')));
+
 //app middleware
 //for parsing data form page forms
 app.use(express.urlencoded({ extended: true }));
