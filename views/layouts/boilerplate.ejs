@@ -22,7 +22,9 @@
 		<!-- flash msq -->
 		<%= success %>
 		<!-- render in body campgrounds components -->
-		<main class="container mt-5"><%- body %></main>
+		<main class="container mt-5">
+			<%- include('../partials/flash')%> <%- body %>
+		</main>
 
 		<!-- adding footer from partials -->
 		<%- include('../partials/footer')%>
