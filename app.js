@@ -2,6 +2,7 @@
 
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 
 //adding layouts
 const ejsMateEngine = require('ejs-mate');
@@ -41,14 +42,20 @@ app.engine('ejs', ejsMateEngine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-//using public directory with js files
-app.use(express.static(path.join(__dirname, 'public')));
-
 //app middleware
 //for parsing data form page forms
 app.use(express.urlencoded({ extended: true }));
-//we can change methods from browser
+//we can change from browser methods
 app.use(methodOverride('_method'));
+//using public directory with js files
+app.use(express.static(path.join(__dirname, 'public')));
+//adding session to app
+const sessionConfig = {
+	secret: 'sessionSecret',
+	resave: false,
+	saveUninitialized: true,
+};
+app.use(session(sessionConfig));
 
 //BASIC PAGE
 app.get('/', (req, res) => {
