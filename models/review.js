@@ -1,3 +1,5 @@
+/** @format */
+
 const mongoose = require('mongoose');
 
 //add schema to variable
