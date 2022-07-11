@@ -23,6 +23,10 @@ const mongoose = require('mongoose');
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
 
+//adding passports package for authentication
+const passport = require('passport');
+const localStrategy = require('passport-local');
+
 //connecting to mongoDB working on localhost
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
 	//check these properties
@@ -72,6 +76,15 @@ app.use(session(sessionConfig));
 
 //setting flash middleware
 app.use(flash());
+
+//setting passport middleware for auth
+app.use(passport.initialize());
+app.use(passport.session());
+//passport will use for login passport-local on user mongoose schema
+passport.use(new localStrategy(User.authenticate()));
+//adding and removing user into session
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //BASIC PAGE
 app.get('/', (req, res) => {
