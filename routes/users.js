@@ -60,7 +60,10 @@ router.post(
 	}),
 	(req, res) => {
 		req.flash('success', 'Welcome back');
-		res.redirect('/campgrounds');
+
+		//path to redirect user to page from before logging in
+		const returnUrl = req.session.returnTo || '/campgrounds';
+		res.redirect(returnUrl);
 	}
 );
 
