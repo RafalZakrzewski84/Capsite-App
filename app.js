@@ -90,10 +90,13 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//setting flash middleware
+//setting middleware for use variables accessible in templates rendered with res.render
 app.use((req, res, next) => {
+	//for flash msg
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
+	//for checking if user login
+	res.locals.currentUser = req.user;
 	next();
 });
 
