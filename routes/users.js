@@ -28,11 +28,17 @@ router.post(
 			const user = new User({ username, email });
 			//registering new user by passport middleware
 			const registeredUser = await User.register(user, password);
-			console.log(registeredUser);
+			// console.log(registeredUser);
 
-			//greetings of new user
-			req.flash('success', `Welcome ${username} in Yelp-Camp`);
-			res.redirect('/campgrounds');
+			//automatic login after registering new user
+			req.login(registeredUser, function (err) {
+				if (err) {
+					return next(err);
+				}
+				//greetings of new user
+				req.flash('success', `Welcome ${username} in Yelp-Camp`);
+				res.redirect('/campgrounds');
+			});
 		} catch (e) {
 			//msg if registering process gone wrong
 			req.flash('error', e.message);
