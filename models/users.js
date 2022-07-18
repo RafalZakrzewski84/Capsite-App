@@ -1,6 +1,6 @@
 /** @format */
 
-const mongoose = requier('mongoose');
+const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const Schema = mongoose.schema;
