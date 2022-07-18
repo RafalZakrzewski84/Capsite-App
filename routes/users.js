@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+//adding passport package
+const passport = require('passport');
+
 //adding error class - catchAsync is wrapping every async function in code below
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
@@ -42,7 +45,17 @@ router.post(
 router.get('/login', (req, res) => {
 	res.render('users/login');
 });
-
-router.post('/login', (req, res) => {});
+//adding login logic - using passport method for auth
+router.post(
+	'/login',
+	passport.authenticate('local', {
+		failureFlash: true,
+		failureRedirect: '/login',
+	}),
+	(req, res) => {
+		req.flash('success', 'Welcome back');
+		res.redirect('/campgrounds');
+	}
+);
 
 module.exports = router;
