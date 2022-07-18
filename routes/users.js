@@ -62,6 +62,7 @@ router.post(
 		req.flash('success', 'Welcome back');
 
 		//path to redirect user to page from before logging
+		console.log('req.returnTO', req.session.returnTo);
 		const returnUrl = req.session.returnTo;
 		console.log(returnUrl);
 		res.redirect(returnUrl);
