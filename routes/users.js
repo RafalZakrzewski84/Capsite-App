@@ -63,6 +63,7 @@ router.post(
 
 		//path to redirect user to page from before logging
 		const returnUrl = req.session.returnTo;
+		console.log(returnUrl);
 		res.redirect(returnUrl);
 	}
 );
