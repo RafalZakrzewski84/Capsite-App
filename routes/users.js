@@ -38,4 +38,11 @@ router.post(
 	})
 );
 
+//setting login route
+router.get('/login', (res, req) => {
+	res.render('users/login');
+});
+
+router.post('/login', (req, res) => {});
+
 module.exports = router;
