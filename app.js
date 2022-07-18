@@ -90,16 +90,16 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//BASIC PAGE
-app.get('/', (req, res) => {
-	res.render('home');
-});
-
 //setting flash middleware
 app.use((req, res, next) => {
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
 	next();
+});
+
+//BASIC PAGE
+app.get('/', (req, res) => {
+	res.render('home');
 });
 
 //campgrounds routes
