@@ -19,7 +19,7 @@ router.post(
 	'/register',
 	catchAsync(async (req, res, next) => {
 		const user = new User(req.body.register);
-		res.send(user);
+		res.send(req.body);
 	})
 );
 
