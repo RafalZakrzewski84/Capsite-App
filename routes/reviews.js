@@ -12,6 +12,9 @@ const Review = require('../models/review');
 const ExpressError = require('../utils/ExpressError');
 const catchAsync = require('../utils/catchAsync');
 
+//adding middleware for checking if user logged in
+const { isLoggedIn } = require('../utils/middleware');
+
 //adding joi schema - package for validating data from forms
 const { reviewJoiSchema } = require('../utils/schemasJOI');
 
@@ -33,6 +36,7 @@ const validateReview = (req, res, next) => {
 //posting new review for camp
 router.post(
 	'/',
+	isLoggedIn,
 	validateReview,
 	catchAsync(async (req, res) => {
 		//finding camp by id
@@ -57,6 +61,7 @@ router.post(
 //deleting review route
 router.delete(
 	'/:reviewId',
+	isLoggedIn,
 	catchAsync(async (req, res) => {
 		const { id, reviewId } = req.params;
 		//removing review id from campground reviews

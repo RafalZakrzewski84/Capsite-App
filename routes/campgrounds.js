@@ -10,6 +10,9 @@ const ExpressError = require('../utils/ExpressError');
 //importing mongoose schema
 const Campground = require('../models/campground');
 
+//adding middleware for checking if user logged in
+const { isLoggedIn } = require('../utils/middleware');
+
 //adding joi schema - package for validating data from forms
 const { campgroundJoiSchema } = require('../utils/schemasJOI');
 
@@ -42,7 +45,7 @@ router.get(
 );
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
 	res.render('campgrounds/new');
 });
 //data from form - new camp page
@@ -85,6 +88,7 @@ router.get(
 //editing existing camp
 router.get(
 	'/:id/edit',
+	isLoggedIn,
 	catchAsync(async (req, res) => {
 		//opening camp page by camp id
 		const camp = await Campground.findById(req.params.id);
@@ -119,6 +123,7 @@ router.put(
 //deleting camp
 router.delete(
 	'/:id',
+	isLoggedIn,
 	catchAsync(async (req, res) => {
 		//camp by id
 		const { id } = req.params;
