@@ -7,7 +7,7 @@ const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 
-//importing mongoose schemas
+//importing mongoose schema
 const Campground = require('../models/campground');
 
 //adding joi schema - package for validating data from forms

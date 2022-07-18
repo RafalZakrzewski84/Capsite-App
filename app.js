@@ -19,6 +19,9 @@ const methodOverride = require('method-override');
 //importing mongoose
 const mongoose = require('mongoose');
 
+//importing user mongoose model
+const User = require('./models/users');
+
 //importing routes
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
