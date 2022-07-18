@@ -3,7 +3,8 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const Schema = mongoose.schema;
+//add schema to variable
+const Schema = mongoose.Schema;
 
 //we define email in schema rest will be added by passport package
 const userSchema = new Schema({
