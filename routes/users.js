@@ -18,12 +18,23 @@ router.get('/register', (req, res) => {
 router.post(
 	'/register',
 	catchAsync(async (req, res, next) => {
-		const { username, email, password } = req.body;
-		const user = new User({ username, email });
-		const registeredUser = await User.register(user, password);
-		console.log(registeredUser);
-		req.flash('success', `Welcome ${username} in Yelp-Camp`);
-		res.redirect('/campgrounds');
+		try {
+			//data from register form
+			const { username, email, password } = req.body;
+			//creating new user
+			const user = new User({ username, email });
+			//registering new user by passport middleware
+			const registeredUser = await User.register(user, password);
+			console.log(registeredUser);
+
+			//greetings of new user
+			req.flash('success', `Welcome ${username} in Yelp-Camp`);
+			res.redirect('/campgrounds');
+		} catch (e) {
+			//msg if registering process gone wrong
+			req.flash('error', e.message);
+			res.redirect('/register');
+		}
 	})
 );
 
