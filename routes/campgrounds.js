@@ -73,7 +73,9 @@ router.get(
 
 		//finding campground in db by it id - id come from url (req.params)
 		//populating reviews data
-		const camp = await Campground.findById(id).populate('reviews');
+		const camp = await Campground.findById(id)
+			.populate('reviews')
+			.populate('author');
 
 		//show flash error msg when campground not found
 		if (!camp) {

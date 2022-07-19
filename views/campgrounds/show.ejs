@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <%layout('/layouts/boilerplate')%>
 
 <div class="row">
@@ -10,6 +12,9 @@
 			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">Location: <%= camp.location%></li>
+				<li class="list-group-item">
+					Submitted by: <%= camp.author.username%>
+				</li>
 				<li class="list-group-item">Price: <%= camp.price%> USD/night</li>
 			</ul>
 			<div class="card-body">
