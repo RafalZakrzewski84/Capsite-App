@@ -63,9 +63,7 @@ router.post(
 		req.flash('success', 'Welcome back');
 
 		//path to redirect user to page from before logging
-		console.log('req.returnTO', req.session.returnTo);
 		const redirectUrl = req.session.returnTo || '/campgrounds';
-		console.log(redirectUrl);
 		delete req.session.returnTo;
 		res.redirect(redirectUrl);
 	}
