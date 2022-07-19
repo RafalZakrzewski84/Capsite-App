@@ -58,7 +58,6 @@ router.post(
 		const camp = new Campground(req.body.campground);
 
 		//assigning logged in user as a creator of campground
-		console.log('req.user', req.user._id);
 		camp.author = req.user._id;
 
 		//saving new camp to db
