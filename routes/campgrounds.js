@@ -57,7 +57,7 @@ router.post(
 		//new campground with data from from
 		const camp = new Campground(req.body.campground);
 
-		//assigning logged in user as a creator of campground
+		//assigning logged in user as a creator of campground (req.user added by passport.authenticate() in routes users.js)
 		camp.author = req.user._id;
 
 		//saving new camp to db

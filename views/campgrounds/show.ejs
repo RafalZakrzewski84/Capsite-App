@@ -17,6 +17,8 @@
 				</li>
 				<li class="list-group-item">Price: <%= camp.price%> USD/night</li>
 			</ul>
+			<!-- allowing editing and deleting when user login and user is creator of campground -->
+			<% if(currentUser && camp.author.equals(currentUser._id)) { %>
 			<div class="card-body">
 				<a href="/campgrounds/<%= camp._id%>/edit" class="btn btn-info"
 					>Edit Campground</a
@@ -29,6 +31,7 @@
 					<button class="btn btn-danger">Delete Campground</button>
 				</form>
 			</div>
+			<% } %>
 			<div class="card-footer text-muted">
 				<a href="/campgrounds" class="card-link">All Campgrounds</a>
 			</div>
