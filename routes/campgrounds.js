@@ -119,7 +119,7 @@ router.put(
 		const camp = await Campground.findById(id);
 		if (!camp.author.equals(req.user._id)) {
 			req.flash('error', "You don't have permission to edit campground");
-			return res.redirect(`/campground/${id}`);
+			return res.redirect(`/campgrounds/${id}`);
 		}
 
 		//finding and updating camp with new data from edit form
