@@ -111,13 +111,19 @@ router.get(
 //updating particular camp and show details
 router.put(
 	'/:id',
+	isLoggedIn,
 	validateCampground,
 	catchAsync(async (req, res) => {
 		//id of camp for update
 		const { id } = req.params;
+		const camp = await Campground.findById(id);
+		if (!camp.author.equals(req.user._id)) {
+			req.flash('error', "You don't have permission to edit campground");
+			return res.redirect(`/campground/${id}`);
+		}
 
 		//finding and updating camp with new data from edit form
-		const camp = await Campground.findByIdAndUpdate(id, {
+		const campground = await Campground.findByIdAndUpdate(id, {
 			...req.body.campground,
 		});
 
