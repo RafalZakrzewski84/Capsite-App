@@ -13,25 +13,7 @@ const ExpressError = require('../utils/ExpressError');
 const catchAsync = require('../utils/catchAsync');
 
 //adding middleware for checking if user logged in
-const { isLoggedIn } = require('../utils/middleware');
-
-//adding joi schema - package for validating data from forms
-const { reviewJoiSchema } = require('../utils/schemasJOI');
-
-//function for validating review data using Joi schema
-const validateReview = (req, res, next) => {
-	//Joi function for validating review Joi schema
-	const { error } = reviewJoiSchema.validate(req.body);
-	// console.log(error.details);
-
-	//generating error if validation failed
-	if (error) {
-		const errorValidationMsg = error.details.map((el) => el.message).join('; ');
-		throw new ExpressError(errorValidationMsg, 400);
-	} else {
-		next();
-	}
-};
+const { isLoggedIn, validateReview } = require('../utils/middleware');
 
 //posting new review for camp
 router.post(

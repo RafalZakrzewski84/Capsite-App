@@ -3,45 +3,18 @@
 const express = require('express');
 const router = express.Router();
 
-//adding error class - catchAsync is wrapping every async function in code below
+//catchAsync is wrapping every async function in code below
 const catchAsync = require('../utils/catchAsync');
-const ExpressError = require('../utils/ExpressError');
 
 //importing mongoose schema
 const Campground = require('../models/campground');
 
 //adding middleware for checking if user logged in
-const { isLoggedIn } = require('../utils/middleware');
-
-//adding joi schema - package for validating data from forms
-const { campgroundJoiSchema } = require('../utils/schemasJOI');
-
-//function for validating camp data using Joi schema
-const validateCampground = (req, res, next) => {
-	//Joi function for validating campground Joi schema
-	const { error } = campgroundJoiSchema.validate(req.body);
-	// console.log(error.details);
-
-	//generating error if validation failed
-	if (error) {
-		const errorValidationMsg = error.details.map((el) => el.message).join('; ');
-		throw new ExpressError(errorValidationMsg, 400);
-	} else {
-		next();
-	}
-};
-
-//checking if user is author of campground
-const isAuthor = async (req, res, next) => {
-	//id of camp for update
-	const { id } = req.params;
-	const camp = await Campground.findById(id);
-	if (!camp.author.equals(req.user._id)) {
-		req.flash('error', "You don't have permission to edit campground");
-		return res.redirect(`/campgrounds/${id}`);
-	}
-	next();
-};
+const {
+	isLoggedIn,
+	validateCampground,
+	isAuthor,
+} = require('../utils/middleware');
 
 //BASIC ROUTE
 //list of all campgrounds
@@ -130,7 +103,7 @@ router.put(
 	validateCampground,
 	catchAsync(async (req, res) => {
 		//finding and updating camp with new data from edit form
-		const campground = await Campground.findByIdAndUpdate(id, {
+		const camp = await Campground.findByIdAndUpdate(id, {
 			...req.body.campground,
 		});
 
