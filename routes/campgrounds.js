@@ -97,13 +97,18 @@ router.get(
 	'/:id/edit',
 	isLoggedIn,
 	catchAsync(async (req, res) => {
+		const { id } = req.params;
 		//opening camp page by camp id
-		const camp = await Campground.findById(req.params.id);
+		const camp = await Campground.findById(id);
 
 		//show flash error msg when campground not found
 		if (!camp) {
 			req.flash('error', 'Campground Not Found');
 			return res.redirect('/campgrounds');
+		}
+		if (!camp.author.equals(req.user._id)) {
+			req.flash('error', "You don't have permission to edit campground");
+			return res.redirect(`/campgrounds/${id}`);
 		}
 		res.render('campgrounds/edit', { camp });
 	})
