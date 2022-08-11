@@ -31,6 +31,18 @@ const validateCampground = (req, res, next) => {
 	}
 };
 
+//checking if user is author of campground
+const isAuthor = async (req, res, next) => {
+	//id of camp for update
+	const { id } = req.params;
+	const camp = await Campground.findById(id);
+	if (!camp.author.equals(req.user._id)) {
+		req.flash('error', "You don't have permission to edit campground");
+		return res.redirect(`/campgrounds/${id}`);
+	}
+	next();
+};
+
 //BASIC ROUTE
 //list of all campgrounds
 router.get(
@@ -92,10 +104,11 @@ router.get(
 	})
 );
 
-//editing existing camp
+//editing existing camp when log in and you are author
 router.get(
 	'/:id/edit',
 	isLoggedIn,
+	isAuthor,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		//opening camp page by camp id
@@ -106,27 +119,16 @@ router.get(
 			req.flash('error', 'Campground Not Found');
 			return res.redirect('/campgrounds');
 		}
-		if (!camp.author.equals(req.user._id)) {
-			req.flash('error', "You don't have permission to edit campground");
-			return res.redirect(`/campgrounds/${id}`);
-		}
 		res.render('campgrounds/edit', { camp });
 	})
 );
-//updating particular camp and show details
+//updating particular camp and show details when log in and you are author
 router.put(
 	'/:id',
 	isLoggedIn,
+	isAuthor,
 	validateCampground,
 	catchAsync(async (req, res) => {
-		//id of camp for update
-		const { id } = req.params;
-		const camp = await Campground.findById(id);
-		if (!camp.author.equals(req.user._id)) {
-			req.flash('error', "You don't have permission to edit campground");
-			return res.redirect(`/campgrounds/${id}`);
-		}
-
 		//finding and updating camp with new data from edit form
 		const campground = await Campground.findByIdAndUpdate(id, {
 			...req.body.campground,
