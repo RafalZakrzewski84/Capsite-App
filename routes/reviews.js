@@ -24,9 +24,9 @@ router.post(
 		//finding camp by id
 		const camp = await Campground.findById(req.params.id);
 
-		//creating review data from form
+		//creating review data from form and adding author
 		const review = new Review(req.body.review);
-
+		review.author = req.user._id;
 		//adding review id to campground doc in db
 		camp.reviews.push(review);
 
