@@ -63,7 +63,12 @@ router.get(
 		//finding campground in db by it id - id come from url (req.params)
 		//populating reviews data and author
 		const camp = await Campground.findById(id)
-			.populate('reviews')
+			.populate({
+				path: 'reviews',
+				populate: {
+					path: 'author',
+				},
+			})
 			.populate('author');
 		console.log(camp);
 
