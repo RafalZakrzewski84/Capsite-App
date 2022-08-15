@@ -14,7 +14,7 @@ const CampgroundSchema = new Schema({
 	price: Number,
 	description: String,
 	location: String,
-	//author shod be obj to have access to user in ejs file
+	//author should be obj to have access to user in ejs file
 	author: {
 		type: Schema.Types.ObjectId,
 		ref: 'Users',
