@@ -38,6 +38,7 @@
 		</div>
 	</div>
 	<div class="col-6">
+		<% if(currentUser) { %>
 		<h2>Leave a Review</h2>
 		<form
 			action="/campgrounds/<%= camp._id%>/reviews"
@@ -70,8 +71,7 @@
 			</div>
 			<button class="btn btn-success">Submit</button>
 		</form>
-
-		<% for(let review of camp.reviews) { %>
+		<% } %> <% for(let review of camp.reviews) { %>
 		<div class="mb-3 card">
 			<div class="card-body">
 				<h5 class="card-title">Rating: <%=review.rating%></h5>
