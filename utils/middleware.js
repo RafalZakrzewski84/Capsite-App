@@ -6,6 +6,7 @@ const { campgroundJoiSchema, reviewJoiSchema } = require('./schemasJOI');
 const ExpressError = require('./ExpressError');
 //importing mongoose schema
 const Campground = require('../models/campground');
+const Review = require('../models/review');
 
 module.exports.isLoggedIn = (req, res, next) => {
 	if (!req.isAuthenticated()) {
@@ -40,6 +41,18 @@ module.exports.isAuthor = async (req, res, next) => {
 	const camp = await Campground.findById(id);
 	if (!camp.author.equals(req.user._id)) {
 		req.flash('error', "You don't have permission to edit campground");
+		return res.redirect(`/campgrounds/${id}`);
+	}
+	next();
+};
+
+//checking if user is author of review
+module.exports.isReviewAuthor = async (req, res, next) => {
+	//id of camp for update
+	const { id, reviewId } = req.params;
+	const review = await Review.findById(reviewId);
+	if (!review.author.equals(req.user._id)) {
+		req.flash('error', "You don't have permission to delete campground");
 		return res.redirect(`/campgrounds/${id}`);
 	}
 	next();

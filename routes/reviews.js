@@ -13,7 +13,11 @@ const ExpressError = require('../utils/ExpressError');
 const catchAsync = require('../utils/catchAsync');
 
 //adding middleware for checking if user logged in
-const { isLoggedIn, validateReview } = require('../utils/middleware');
+const {
+	isLoggedIn,
+	validateReview,
+	isReviewAuthor,
+} = require('../utils/middleware');
 
 //posting new review for camp
 router.post(
@@ -40,10 +44,11 @@ router.post(
 	})
 );
 
-//deleting review route
+//deleting review route only if logged in and author of review
 router.delete(
 	'/:reviewId',
 	isLoggedIn,
+	isReviewAuthor,
 	catchAsync(async (req, res) => {
 		const { id, reviewId } = req.params;
 		//removing review id from campground reviews
