@@ -26,8 +26,8 @@ router
 	.route('/')
 	.get(catchAsync(campgrounds.renderCampListPage))
 	// .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createNewCamp));
-	.post(upload.single('image'), (req, res) => {
-		console.log(req.body, req.file);
+	.post(upload.array('image'), (req, res) => {
+		console.log(req.body, req.files);
 	});
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
