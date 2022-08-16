@@ -1,9 +1,8 @@
 /** @format */
+//access to env file with secret variables in dev mode
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
-
-console.log(process.env);
 
 const express = require('express');
 const path = require('path');
