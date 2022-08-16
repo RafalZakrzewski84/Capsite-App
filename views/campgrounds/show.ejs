@@ -1,6 +1,7 @@
 <!-- @format -->
 
 <%layout('/layouts/boilerplate')%>
+<link rel="stylesheet" href="../../public/stylesheets/stars.css" />
 
 <div class="row">
 	<div class="col-6">
@@ -78,6 +79,7 @@
 				<h6 class="card-subtitle mb-2 text-muted">
 					By <%= review.author.username%>
 				</h6>
+				<p class="starability-result" data-rating="3">Rated: 3 stars</p>
 				<p class="card-text">Review: <%=review.body%></p>
 				<% if(currentUser && review.author.equals(currentUser._id)) { %>
 				<form
