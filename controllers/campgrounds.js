@@ -69,6 +69,7 @@ module.exports.renderCampEditForm = async (req, res) => {
 };
 
 module.exports.editCamp = async (req, res) => {
+	const { id } = req.params;
 	//finding and updating camp with new data from edit form
 	const camp = await Campground.findByIdAndUpdate(id, {
 		...req.body.campground,
