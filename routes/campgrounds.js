@@ -21,7 +21,10 @@ const {
 router
 	.route('/')
 	.get(catchAsync(campgrounds.renderCampListPage))
-	.post(isLoggedIn, validateCampground, catchAsync(campgrounds.createNewCamp));
+	// .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createNewCamp));
+	.post((req, res) => {
+		res.send(req.body);
+	});
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
 router.get('/new', isLoggedIn, campgrounds.renderNewCampForm);
