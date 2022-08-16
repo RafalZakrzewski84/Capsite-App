@@ -9,9 +9,6 @@ const campgrounds = require('../controllers/campgrounds');
 //catchAsync is wrapping every async function in code below
 const catchAsync = require('../utils/catchAsync');
 
-//importing mongoose schema
-const Campground = require('../models/campground');
-
 //adding middleware for checking if user logged in
 const {
 	isLoggedIn,
