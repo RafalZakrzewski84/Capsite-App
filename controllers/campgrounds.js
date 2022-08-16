@@ -2,7 +2,7 @@
 //importing mongoose schema for campgrounds
 const Campground = require('../models/campground');
 
-module.export.index = async (req, res) => {
+module.exports.index = async (req, res) => {
 	//finding all campground in db
 	const campgrounds = await Campground.find({});
 
