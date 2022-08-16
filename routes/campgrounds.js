@@ -18,20 +18,32 @@ const {
 
 //BASIC ROUTE
 //list of all campgrounds
-router.get('/', catchAsync(campgrounds.renderCampListPage));
+router
+	.route('/')
+	.get(catchAsync(campgrounds.renderCampListPage))
+	.post(
+		'/',
+		isLoggedIn,
+		validateCampground,
+		catchAsync(campgrounds.createNewCamp)
+	);
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
 router.get('/new', isLoggedIn, campgrounds.renderNewCampForm);
-//data from form - new camp page
-router.post(
-	'/',
-	isLoggedIn,
-	validateCampground,
-	catchAsync(campgrounds.createNewCamp)
-);
 
 //page with detailed information about comp
-router.get('/:id', catchAsync(campgrounds.renderCampDetailsPage));
+//updating particular camp and show details when log in and you are author
+//deleting camp
+router
+	.route('/:id')
+	.get(catchAsync(campgrounds.renderCampDetailsPage))
+	.put(
+		isLoggedIn,
+		isAuthor,
+		validateCampground,
+		catchAsync(campgrounds.editCamp)
+	)
+	.delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCamp));
 
 //editing existing camp when log in and you are author
 router.get(
@@ -40,16 +52,5 @@ router.get(
 	isAuthor,
 	catchAsync(campgrounds.renderCampEditForm)
 );
-//updating particular camp and show details when log in and you are author
-router.put(
-	'/:id',
-	isLoggedIn,
-	isAuthor,
-	validateCampground,
-	catchAsync(campgrounds.editCamp)
-);
-
-//deleting camp
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCamp));
 
 module.exports = router;

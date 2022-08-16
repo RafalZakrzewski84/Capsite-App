@@ -17,22 +17,26 @@ const ExpressError = require('../utils/ExpressError');
 const User = require('../models/users');
 
 //setting register route
-router.get('/register', users.renderRegisterForm);
 //adding data from register form to db - new user
-router.post('/register', catchAsync(users.registerUser));
+router
+	.route('/register')
+	.get(users.renderRegisterForm)
+	.post('/register', catchAsync(users.registerUser));
 
 //setting login route
-router.get('/login', users.renderLoginForm);
 //adding login logic - using passport method for auth
-router.post(
-	'/login',
-	passport.authenticate('local', {
-		failureFlash: true,
-		failureRedirect: '/login',
-		keepSessionInfo: true,
-	}),
-	users.loginUser
-);
+router
+	.route('/login')
+	.get(users.renderLoginForm)
+	.post(
+		'/login',
+		passport.authenticate('local', {
+			failureFlash: true,
+			failureRedirect: '/login',
+			keepSessionInfo: true,
+		}),
+		users.loginUser
+	);
 
 router.get('/logout', users.logoutUser);
 
