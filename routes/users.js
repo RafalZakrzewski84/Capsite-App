@@ -21,7 +21,7 @@ const User = require('../models/users');
 router
 	.route('/register')
 	.get(users.renderRegisterForm)
-	.post('/register', catchAsync(users.registerUser));
+	.post(catchAsync(users.registerUser));
 
 //setting login route
 //adding login logic - using passport method for auth
@@ -29,7 +29,6 @@ router
 	.route('/login')
 	.get(users.renderLoginForm)
 	.post(
-		'/login',
 		passport.authenticate('local', {
 			failureFlash: true,
 			failureRedirect: '/login',
