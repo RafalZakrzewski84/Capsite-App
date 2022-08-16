@@ -3,6 +3,10 @@
 const express = require('express');
 const router = express.Router();
 
+//import multer package for handling "multipart/form-data" in form
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
 //importing controllers for campgrounds
 const campgrounds = require('../controllers/campgrounds');
 
@@ -22,8 +26,8 @@ router
 	.route('/')
 	.get(catchAsync(campgrounds.renderCampListPage))
 	// .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createNewCamp));
-	.post((req, res) => {
-		res.send(req.body);
+	.post(upload.single('image'), (req, res) => {
+		res.send(req.file, req.body);
 	});
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
