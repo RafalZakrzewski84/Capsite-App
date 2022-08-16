@@ -75,12 +75,10 @@
 		<% } %> <% for(let review of camp.reviews) { %>
 		<div class="mb-3 card">
 			<div class="card-body">
-				<h5 class="card-title">Rating: <%=review.rating%></h5>
-				<h6 class="card-subtitle mb-2 text-muted">
-					By <%= review.author.username%>
-				</h6>
-				<h3>Rated element name</h3>
-				<p class="starability-result" data-rating="3">Rated: 3 stars</p>
+				<h5 class="card-title">By <%= review.author.username%></h5>
+				<p class="starability-result" data-rating="<%=review.rating%>">
+					Rated: <%=review.rating%> stars
+				</p>
 				<p class="card-text">Review: <%=review.body%></p>
 				<% if(currentUser && review.author.equals(currentUser._id)) { %>
 				<form
