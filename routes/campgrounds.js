@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+//importing controllers for campgrounds
+const campgrounds = require('../controllers/campgrounds');
+
 //catchAsync is wrapping every async function in code below
 const catchAsync = require('../utils/catchAsync');
 
@@ -18,16 +21,7 @@ const {
 
 //BASIC ROUTE
 //list of all campgrounds
-router.get(
-	'/',
-	catchAsync(async (req, res) => {
-		//finding all campground in db
-		const campgrounds = await Campground.find({});
-
-		//render page with all campgrounds
-		res.render('campgrounds/index', { campgrounds });
-	})
-);
+router.get('/', catchAsync(campgrounds.index));
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
 router.get('/new', isLoggedIn, (req, res) => {
