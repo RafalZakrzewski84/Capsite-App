@@ -23,7 +23,6 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.validateCampground = (req, res, next) => {
 	//Joi function for validating campground Joi schema
 	const { error } = campgroundJoiSchema.validate(req.body);
-	// console.log(error.details);
 
 	//generating error if validation failed
 	if (error) {
@@ -62,7 +61,6 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 module.exports.validateReview = (req, res, next) => {
 	//Joi function for validating review Joi schema
 	const { error } = reviewJoiSchema.validate(req.body);
-	// console.log(error.details);
 
 	//generating error if validation failed
 	if (error) {

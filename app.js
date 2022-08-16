@@ -92,8 +92,6 @@ passport.deserializeUser(User.deserializeUser());
 
 //setting middleware for use variables accessible in templates rendered with res.render
 app.use((req, res, next) => {
-	console.log(req.session);
-
 	//variables for flash msg
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
