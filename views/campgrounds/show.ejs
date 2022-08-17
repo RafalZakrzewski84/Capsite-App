@@ -18,6 +18,7 @@
 					</div>
 					<% }) %>
 				</div>
+				<% if(camp.images.length > 1) { %>
 				<button
 					class="carousel-control-prev"
 					type="button"
@@ -36,6 +37,7 @@
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="visually-hidden">Next</span>
 				</button>
+				<% } %>
 			</div>
 			<div class="card-body">
 				<h5 class="card-title"><%= camp.title%></h5>
