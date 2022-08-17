@@ -8,7 +8,7 @@ const { storage } = require('../utils/cloudinary');
 
 //import multer package for handling "multipart/form-data" in form
 const multer = require('multer');
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 //importing controllers for campgrounds
 const campgrounds = require('../controllers/campgrounds');
