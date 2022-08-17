@@ -83,6 +83,7 @@ module.exports.editCamp = async (req, res) => {
 	const camp = await Campground.findByIdAndUpdate(id, {
 		...req.body.campground,
 	});
+	//adding new imgs to existing in camp
 	camp.images.push(...images);
 	await camp.save();
 
