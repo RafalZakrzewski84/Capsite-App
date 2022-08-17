@@ -12,15 +12,11 @@
 				data-bs-ride="carousel"
 			>
 				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="..." class="d-block w-100" alt="..." />
+					<% camp.images.forEach((image, idx) => {%>
+					<div class="carousel-item <%idx === 0 ? "active" : ""%>>
+						<img src="<%= image.url%>" class="d-block w-100" alt="" />
 					</div>
-					<div class="carousel-item">
-						<img src="..." class="d-block w-100" alt="..." />
-					</div>
-					<div class="carousel-item">
-						<img src="..." class="d-block w-100" alt="..." />
-					</div>
+					<% }) %>
 				</div>
 				<button
 					class="carousel-control-prev"
@@ -41,9 +37,6 @@
 					<span class="visually-hidden">Next</span>
 				</button>
 			</div>
-			<% for(let image of camp.images) {%>
-			<img src="<%= image.url%>" class="card-img-top" alt="..." />
-			<% } %>
 			<div class="card-body">
 				<h5 class="card-title"><%= camp.title%></h5>
 				<p class="card-text"><%=camp.description%></p>
