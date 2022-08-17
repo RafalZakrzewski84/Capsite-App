@@ -31,6 +31,7 @@ router
 	// .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createNewCamp));
 	.post(upload.array('image'), (req, res) => {
 		console.log(req.body, req.files);
+		res.send('It worked!');
 	});
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
