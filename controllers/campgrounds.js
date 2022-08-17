@@ -19,7 +19,11 @@ module.exports.renderNewCampForm = (req, res) => {
 module.exports.createNewCamp = async (req, res, next) => {
 	//new campground with data from from
 	const camp = new Campground(req.body.campground);
-
+	//adding images data from cloudinary through multer
+	camp.images = req.files.map((file) => ({
+		url: file.path,
+		filename: file.filename,
+	}));
 	//assigning logged in user as a creator of campground (req.user added by passport.authenticate() in routes users.js)
 	camp.author = req.user._id;
 
