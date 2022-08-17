@@ -3,9 +3,12 @@
 const express = require('express');
 const router = express.Router();
 
+//importing cloudinary storage
+const { storage } = require('../utils/cloudinary');
+
 //import multer package for handling "multipart/form-data" in form
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage });
 
 //importing controllers for campgrounds
 const campgrounds = require('../controllers/campgrounds');
