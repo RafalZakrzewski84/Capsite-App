@@ -74,6 +74,7 @@ module.exports.renderCampEditForm = async (req, res) => {
 
 module.exports.editCamp = async (req, res) => {
 	const { id } = req.params;
+	//collecting imgs data from multer
 	const images = req.files.map((file) => ({
 		url: file.path,
 		filename: file.filename,
@@ -81,8 +82,9 @@ module.exports.editCamp = async (req, res) => {
 	//finding and updating camp with new data from edit form
 	const camp = await Campground.findByIdAndUpdate(id, {
 		...req.body.campground,
-		...images,
 	});
+	camp.images.push(...images);
+	await camp.save();
 
 	//flash msq
 	req.flash('success', 'Campground Edited Successfully');
