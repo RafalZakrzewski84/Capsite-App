@@ -1,5 +1,6 @@
 /** @format */
 
+const { string } = require('joi');
 const mongoose = require('mongoose');
 const Review = require('./review');
 const Users = require('./users');
@@ -10,7 +11,12 @@ const Schema = mongoose.Schema;
 //setting new schema for Campgrounds
 const CampgroundSchema = new Schema({
 	title: String,
-	image: String,
+	images: [
+		{
+			url: string,
+			filename: string,
+		},
+	],
 	price: Number,
 	description: String,
 	location: String,

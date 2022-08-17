@@ -28,11 +28,12 @@ const {
 router
 	.route('/')
 	.get(catchAsync(campgrounds.renderCampListPage))
-	// .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createNewCamp));
-	.post(upload.array('image'), (req, res) => {
-		console.log(req.body, req.files);
-		res.send('It worked!');
-	});
+	.post(
+		isLoggedIn,
+		upload.array('image'),
+		validateCampground,
+		catchAsync(campgrounds.createNewCamp)
+	);
 
 //page for adding new campground (before :id to prevent triggering .findById('new'))
 router.get('/new', isLoggedIn, campgrounds.renderNewCampForm);
