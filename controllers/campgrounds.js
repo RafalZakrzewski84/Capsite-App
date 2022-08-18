@@ -87,6 +87,13 @@ module.exports.editCamp = async (req, res) => {
 	camp.images.push(...images);
 	await camp.save();
 
+	//mongoose method for removing data from mongo db
+	if (req.body.deleteImages) {
+		await camp.updateOne({
+			$pull: { images: { filename: { $in: req.body.deleteImages } } },
+		});
+	}
+
 	//flash msq
 	req.flash('success', 'Campground Edited Successfully');
 	res.redirect(`/campgrounds/${camp._id}`);
