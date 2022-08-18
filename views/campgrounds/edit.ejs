@@ -45,11 +45,6 @@
 					multiple
 				/>
 			</div>
-			<!-- <div class="mb-3">
-				<label class="form-label" for="image">Add Images</label>
-				<input type="file" id="image" name="image" multiple required />
-				<div class="valid-feedback">Images Added!</div>
-			</div> -->
 			<div class="mb-3">
 				<label class="form-label" for="price">Price</label>
 
@@ -81,6 +76,22 @@
 <%= camp.description%></textarea
 				>
 				<div class="valid-feedback">Looks good!</div>
+			</div>
+			<div class="mb-3">
+				<% camp.images.forEach((img, idx) => { %>
+				<img src="<%= img.url %>" class="img-thumbnail" alt="" />
+				<div class="form-check">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="image-<%=idx%>"
+					/>
+					<label class="form-check-label" for="image-<%=idx%>">
+						Check For Delete
+					</label>
+				</div>
+				<% }) %>
 			</div>
 			<div class="mb-3">
 				<button class="btn btn-success">Update Campground</button>
