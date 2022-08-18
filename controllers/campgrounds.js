@@ -2,6 +2,8 @@
 //importing mongoose schema for campgrounds
 const Campground = require('../models/campground');
 
+const { cloudinary } = require('../utils/cloudinary');
+
 //modules are imported in /routes/campgrouds.js
 
 module.exports.renderCampListPage = async (req, res) => {
@@ -87,8 +89,12 @@ module.exports.editCamp = async (req, res) => {
 	camp.images.push(...images);
 	await camp.save();
 
+	//use cloudinary method for deleting files from cloud
 	//mongoose method for removing data from mongo db
 	if (req.body.deleteImages) {
+		for (let filename of req.body.deleteImages) {
+			await cloudinary.uploader.destroy(filename);
+		}
 		await camp.updateOne({
 			$pull: { images: { filename: { $in: req.body.deleteImages } } },
 		});
