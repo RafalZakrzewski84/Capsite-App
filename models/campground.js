@@ -8,15 +8,20 @@ const Users = require('./users');
 //add schema to variable
 const Schema = mongoose.Schema;
 
+//separate schema for images
+const ImagesSchema = new Schema({
+	url: String,
+	filename: String,
+});
+//using virtual property for generating thumbnail url for images
+ImagesSchema.virtual('imgThumbnail').get(function () {
+	return this.url.replace('/upload', '/upload/w_200');
+});
+
 //setting new schema for Campgrounds
 const CampgroundSchema = new Schema({
 	title: String,
-	images: [
-		{
-			url: String,
-			filename: String,
-		},
-	],
+	images: [ImagesSchema],
 	price: Number,
 	description: String,
 	location: String,
