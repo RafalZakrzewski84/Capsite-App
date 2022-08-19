@@ -19,7 +19,7 @@ map.on('style.load', () => {
 });
 
 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-	`<h3>${campground.title}</h3><p>${campground.location}</p>`
+	`<h5>${campground.title}</h5><p>${campground.location}</p>`
 );
 
 const marker = new mapboxgl.Marker({ color: 'black' })
