@@ -22,6 +22,7 @@ const methodOverride = require('method-override');
 
 //importing mongoose
 const mongoose = require('mongoose');
+const mongoSanitize = require('express-mongo-sanitize');
 
 //importing user mongoose model
 const User = require('./models/users');
@@ -105,7 +106,10 @@ app.use((req, res, next) => {
 	next();
 });
 
-//BASIC PAGE
+//$ and . characters are removed completely req.body,params,headers,query
+app.use(mongoSanitize());
+
+//homepage
 app.get('/', (req, res) => {
 	res.render('home');
 });
