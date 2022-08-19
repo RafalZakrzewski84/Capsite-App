@@ -70,12 +70,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //adding session to app
 const sessionConfig = {
+	name: '_ycraf',
 	secret: 'sessionSecret',
 	resave: false,
 	saveUninitialized: true,
 	//adding cookies
 	cookie: {
 		httpOnly: true,
+		//secure: true,
 		//current day + 7 days in milliseconds
 		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
 		maxAge: 1000 * 60 * 60 * 24 * 7,
