@@ -4,6 +4,7 @@ const { string } = require('joi');
 const mongoose = require('mongoose');
 const Review = require('./review');
 const Users = require('./users');
+const opts = { toJSON: { virtuals: true } };
 
 //add schema to variable
 const Schema = mongoose.Schema;
@@ -19,37 +20,45 @@ ImagesSchema.virtual('imgThumbnail').get(function () {
 });
 
 //setting new schema for Campgrounds
-const CampgroundSchema = new Schema({
-	title: String,
-	images: [ImagesSchema],
-	price: Number,
-	description: String,
-	location: String,
+const CampgroundSchema = new Schema(
+	{
+		title: String,
+		images: [ImagesSchema],
+		price: Number,
+		description: String,
+		location: String,
 
-	//must follow GeoJSON pattern
-	//Mongoose schema where location
-	geometry: {
-		type: {
-			type: String, // Don't do `{ location: { type: String } }`
-			enum: ['Point'], // 'location.type' must be 'Point'
-			required: true,
+		//must follow GeoJSON pattern
+		//Mongoose schema where location
+		geometry: {
+			type: {
+				type: String, // Don't do `{ location: { type: String } }`
+				enum: ['Point'], // 'location.type' must be 'Point'
+				required: true,
+			},
+			coordinates: {
+				type: [Number],
+				required: true,
+			},
 		},
-		coordinates: {
-			type: [Number],
-			required: true,
-		},
-	},
-	//author should be obj to have access to user in ejs file
-	author: {
-		type: Schema.Types.ObjectId,
-		ref: 'Users',
-	},
-	reviews: [
-		{
+		//author should be obj to have access to user in ejs file
+		author: {
 			type: Schema.Types.ObjectId,
-			ref: 'Review',
+			ref: 'Users',
 		},
-	],
+		reviews: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Review',
+			},
+		],
+	},
+	opts
+);
+
+//using virtual property for generating GeoJSON properties for cluster map
+CampgroundSchema.virtual('properties.popupMarkup').get(function () {
+	return `<a href="/campgrounds/${this._id}">${this.title}</a>`;
 });
 
 //mongoose middleware for deleting reviews after deleting camp
