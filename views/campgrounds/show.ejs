@@ -3,9 +3,15 @@
 <%layout('/layouts/boilerplate')%>
 <link rel="stylesheet" href="/stylesheets/stars.css" />
 
+<!-- only for passing map token to showMapPage script -->
+<script>
+	const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+</script>
+
 <div class="row">
 	<div class="col-6">
 		<div class="card mb-3">
+			<div id="map" style="width: 400px; height: 300px"></div>
 			<div
 				id="carouselExampleControls"
 				class="carousel slide"
@@ -164,3 +170,6 @@
 		<%}%>
 	</div>
 </div>
+
+<!-- script for initialization Mapbox -->
+<script src="/javascripts/showPageMap.js"></script>
