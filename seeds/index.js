@@ -36,7 +36,13 @@ const seedDB = async () => {
 		//new camp with name and location
 		const camp = new Campground({
 			location: `${cities[random1000].city}, ${cities[random1000].state}`,
-			geometry: { type: 'Point', coordinates: [18.396901, 54.570015] },
+			geometry: {
+				type: 'Point',
+				coordinates: [
+					cities[random1000].longitude,
+					cities[random1000].latitude,
+				],
+			},
 			title: `${sample(descriptors)} ${sample(places)}`,
 			author: '62d513e62befb692d956d5a6',
 			images: [

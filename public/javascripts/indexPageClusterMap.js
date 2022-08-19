@@ -1,7 +1,6 @@
 /** @format */
 
-mapboxgl.accessToken =
-	'pk.eyJ1Ijoicnpha3J6ZXdza2k4NCIsImEiOiJjbDcwNm5mOWswYmljM3ZvcTFmbmpxOXZqIn0.DH41z3hiUh_yn_gg6aV6Sw';
+mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
 	container: 'map',
 	style: 'mapbox://styles/mapbox/dark-v10',
