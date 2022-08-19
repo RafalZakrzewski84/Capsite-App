@@ -169,7 +169,7 @@
 <!-- only for passing map token and coordinates for marker to showMapPage script -->
 <script>
 	const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
-	const campground = '<%- camp%>';
+	const campground = <%- JSON.stringify(camp) %>;
 </script>
 <!-- script for initialization Mapbox -->
 <script src="/javascripts/showPageMap.js"></script>
