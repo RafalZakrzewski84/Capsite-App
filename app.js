@@ -24,6 +24,8 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
 
+const helmet = require('helmet');
+
 //importing user mongoose model
 const User = require('./models/users');
 
@@ -87,6 +89,53 @@ app.use(session(sessionConfig));
 
 //setting flash middleware
 app.use(flash());
+
+//setting helmet
+app.use(helmet());
+
+const scriptSrcUrls = [
+	'https://stackpath.bootstrapcdn.com/',
+	'https://api.tiles.mapbox.com/',
+	'https://api.mapbox.com/',
+	'https://kit.fontawesome.com/',
+	'https://cdnjs.cloudflare.com/',
+	'https://cdn.jsdelivr.net',
+];
+const styleSrcUrls = [
+	'https://kit-free.fontawesome.com/',
+	'https://stackpath.bootstrapcdn.com/',
+	'https://api.mapbox.com/',
+	'https://api.tiles.mapbox.com/',
+	'https://fonts.googleapis.com/',
+	'https://use.fontawesome.com/',
+];
+const connectSrcUrls = [
+	'https://api.mapbox.com/',
+	'https://a.tiles.mapbox.com/',
+	'https://b.tiles.mapbox.com/',
+	'https://events.mapbox.com/',
+];
+const fontSrcUrls = [];
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			defaultSrc: [],
+			connectSrc: ["'self'", ...connectSrcUrls],
+			scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+			styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+			workerSrc: ["'self'", 'blob:'],
+			objectSrc: [],
+			imgSrc: [
+				"'self'",
+				'blob:',
+				'data:',
+				'https://res.cloudinary.com/dj9mlzzp1/',
+				'https://images.unsplash.com/',
+			],
+			fontSrc: ["'self'", ...fontSrcUrls],
+		},
+	})
+);
 
 //setting passport middleware for auth
 app.use(passport.initialize());
