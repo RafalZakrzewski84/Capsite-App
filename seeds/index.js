@@ -29,7 +29,7 @@ const seedDB = async () => {
 	await Campground.deleteMany({});
 
 	//loop for generating new document in mongo db
-	for (let i = 0; i < 250; i++) {
+	for (let i = 0; i < 500; i++) {
 		const random1000 = Math.floor(Math.random() * 1000);
 		const price = Math.floor(Math.random() * 30) + 10;
 
