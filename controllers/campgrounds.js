@@ -30,9 +30,13 @@ module.exports.createNewCamp = async (req, res, next) => {
 			limit: 1,
 		})
 		.send();
-	console.log(geoData.body.Features[0].geometry.coordinates);
+
 	//new campground with data from from
 	const camp = new Campground(req.body.campground);
+
+	//adding geocoding data to campground
+	camp.geometry = geoData.body.Features[0].geometry;
+
 	//adding images data from cloudinary through multer
 	camp.images = req.files.map((file) => ({
 		url: file.path,
@@ -40,7 +44,7 @@ module.exports.createNewCamp = async (req, res, next) => {
 	}));
 	//assigning logged in user as a creator of campground (req.user added by passport.authenticate() in routes users.js)
 	camp.author = req.user._id;
-
+	console.log(camp);
 	//saving new camp to db
 	await camp.save();
 
