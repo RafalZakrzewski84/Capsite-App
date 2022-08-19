@@ -17,3 +17,5 @@ map.on('style.load', () => {
 		'star-intensity': 0.6, // Background star brightness (default 0.35 at low zoooms )
 	});
 });
+
+const marker = new mapboxgl.Marker().setLngLat([-74.5, 40]).addTo(map);
