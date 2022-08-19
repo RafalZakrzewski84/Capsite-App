@@ -8,6 +8,10 @@ const map = new mapboxgl.Map({
 	zoom: 6, // starting zoom
 	projection: 'globe', // display the map as a 3D globe
 });
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+
 map.on('style.load', () => {
 	map.setFog({
 		color: 'rgb(186, 210, 235)', // Lower atmosphere
