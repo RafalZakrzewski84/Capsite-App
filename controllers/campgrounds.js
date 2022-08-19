@@ -35,7 +35,7 @@ module.exports.createNewCamp = async (req, res, next) => {
 	const camp = new Campground(req.body.campground);
 
 	//adding geocoding data to campground
-	camp.geometry = geoData.body.Features[0].geometry;
+	camp.geometry = geoData.body.features[0].geometry;
 
 	//adding images data from cloudinary through multer
 	camp.images = req.files.map((file) => ({
