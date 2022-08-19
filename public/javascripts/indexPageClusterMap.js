@@ -67,7 +67,7 @@ map.on('load', () => {
 			'circle-color': '#11b4da',
 			'circle-radius': 4,
 			'circle-stroke-width': 1,
-			'circle-stroke-color': '#fff',
+			'circle-stroke-color': 'black',
 		},
 	});
 
@@ -95,22 +95,9 @@ map.on('load', () => {
 	// description HTML from its properties.
 	map.on('click', 'unclustered-point', (e) => {
 		const coordinates = e.features[0].geometry.coordinates.slice();
-		const mag = e.features[0].properties.mag;
-		const tsunami = e.features[0].properties.tsunami === 1 ? 'yes' : 'no';
+		const { popupMarkup } = e.features[0].properties;
 
-		// Ensure that if the map is zoomed out such that
-		// multiple copies of the feature are visible, the
-		// popup appears over the copy being pointed to.
-		while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-			coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-		}
-
-		new mapboxgl.Popup()
-			.setLngLat(coordinates)
-			.setHTML(
-				`Name: ${campgrounds.title}<br>Location: ${campgrounds.location}`
-			)
-			.addTo(map);
+		new mapboxgl.Popup().setLngLat(coordinates).setHTML(popupMarkup).addTo(map);
 	});
 
 	map.on('mouseenter', 'clusters', () => {
