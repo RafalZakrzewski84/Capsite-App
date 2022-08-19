@@ -25,20 +25,20 @@ const CampgroundSchema = new Schema({
 	price: Number,
 	description: String,
 	location: String,
-	
+
 	//must follow GeoJSON pattern
 	//Mongoose schema where location
 	geometry: {
 		type: {
-		  type: String, // Don't do `{ location: { type: String } }`
-		  enum: ['Point'], // 'location.type' must be 'Point'
-		  required: true
+			type: String, // Don't do `{ location: { type: String } }`
+			enum: ['Point'], // 'location.type' must be 'Point'
+			required: true,
 		},
 		coordinates: {
-		  type: [Number],
-		  required: true
-		}
-	  }
+			type: [Number],
+			required: true,
+		},
+	},
 	//author should be obj to have access to user in ejs file
 	author: {
 		type: Schema.Types.ObjectId,
