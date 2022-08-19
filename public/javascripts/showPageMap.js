@@ -1,6 +1,6 @@
 /** @format */
 
-const campground = require("../../models/campground");
+const campground = require('../../models/campground');
 
 mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
@@ -21,7 +21,7 @@ map.on('style.load', () => {
 });
 
 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-	`<h3>${<%=campground.title%>}</h3><p>${campground.location}</p>`
+	`<h3>${campground.title}</h3><p>${campground.location}</p>`
 );
 
 const marker = new mapboxgl.Marker({ color: 'black', rotation: 45 })
