@@ -72,7 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //adding session to app
 const sessionConfig = {
-	name: '_ycraf',
+	name: 'session',
 	secret: 'sessionSecret',
 	resave: false,
 	saveUninitialized: true,
@@ -89,7 +89,7 @@ app.use(session(sessionConfig));
 
 //setting flash middleware
 app.use(flash());
-
+app.use(helmet({ crossOriginEmbedderPolicy: false }));
 //setting helmet
 // app.use(helmet());
 
