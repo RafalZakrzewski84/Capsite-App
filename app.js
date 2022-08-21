@@ -38,8 +38,10 @@ const usersRoutes = require('./routes/users');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 
-//connecting to mongoDB working on localhost
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
+//connecting to mongoDB Atlas
+const db_url = process.env.MONGO_ATLAS_URL;
+//'mongodb://127.0.0.1:27017/yelp-camp'
+mongoose.connect(db_url, {
 	//check these properties
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
