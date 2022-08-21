@@ -74,17 +74,13 @@ app.use(methodOverride('_method'));
 //using public directory with js files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//setting mongo session storage
-const mongoStorage = MongoStore.create({
-	url: db_url,
-	secret: 'sessionSecret',
-	touchAfter: 24 * 3600,
-});
-console.log(mongoStorage);
-
 //adding session to app
 const sessionConfig = {
-	mongoStorage,
+	store: MongoStore.create({
+		mongoUrl: db_url,
+		secret: 'sessionSecret',
+		touchAfter: 24 * 3600,
+	}),
 	name: 'session',
 	secret: 'sessionSecret',
 	resave: false,
