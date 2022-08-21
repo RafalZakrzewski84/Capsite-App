@@ -40,9 +40,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 
 //connecting to mongoDB Atlas
-const db_url = 'mongodb://127.0.0.1:27017/yelp-camp';
-//process.env.MONGO_ATLAS_URL
-//'mongodb://127.0.0.1:27017/yelp-camp'
+const db_url =
+	process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
 mongoose.connect(db_url, {
 	//check these properties
 	useNewUrlParser: true,
@@ -75,14 +74,15 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //adding session to app
+const secret = process.env.SECRET || 'sessionAppSecret';
 const sessionConfig = {
 	store: MongoStore.create({
 		mongoUrl: db_url,
-		secret: 'sessionSecret',
+		secret,
 		touchAfter: 24 * 3600,
 	}),
 	name: 'session',
-	secret: 'sessionSecret',
+	secret,
 	resave: false,
 	saveUninitialized: true,
 	//adding cookies
