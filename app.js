@@ -24,7 +24,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
 
-const helmet = require('helmet');
+// const helmet = require('helmet');
 
 //importing user mongoose model
 const User = require('./models/users');
@@ -89,7 +89,7 @@ app.use(session(sessionConfig));
 
 //setting flash middleware
 app.use(flash());
-app.use(helmet({ crossOriginEmbedderPolicy: false }));
+// app.use(helmet({ crossOriginEmbedderPolicy: false }));
 //setting helmet
 // app.use(helmet());
 
