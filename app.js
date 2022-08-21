@@ -91,7 +91,7 @@ app.use(session(sessionConfig));
 app.use(flash());
 
 //setting helmet
-app.use(helmet());
+// app.use(helmet());
 
 const scriptSrcUrls = [
 	'https://cdn.jsdelivr.net/',
@@ -129,7 +129,7 @@ app.use(
 				"'self'",
 				'blob:',
 				'data:',
-				'https://res.cloudinary.com/dj9mlzzp1/image/upload/v1660739852/Yelpcamp/',
+				'https://res.cloudinary.com/dj9mlzzp1/',
 				'https://images.unsplash.com/',
 			],
 			fontSrc: ["'self'", ...fontSrcUrls],
