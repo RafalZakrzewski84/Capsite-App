@@ -129,7 +129,7 @@ app.use(
 				"'self'",
 				'blob:',
 				'data:',
-				'https://res.cloudinary.com/dj9mlzzp1/',
+				'https://res.cloudinary.com/dj9mlzzp1/image/upload/v1660739852/Yelpcamp/',
 				'https://images.unsplash.com/',
 			],
 			fontSrc: ["'self'", ...fontSrcUrls],
