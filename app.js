@@ -7,9 +7,10 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const path = require('path');
 
-//adding session and flash to app
+//adding session, flash to app and mongo as session storage
 const session = require('express-session');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 
 //adding layouts
 const ejsMateEngine = require('ejs-mate');
@@ -39,7 +40,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 
 //connecting to mongoDB Atlas
-const db_url = process.env.MONGO_ATLAS_URL;
+const db_url = 'mongodb://127.0.0.1:27017/yelp-camp';
+//process.env.MONGO_ATLAS_URL
 //'mongodb://127.0.0.1:27017/yelp-camp'
 mongoose.connect(db_url, {
 	//check these properties
@@ -72,8 +74,17 @@ app.use(methodOverride('_method'));
 //using public directory with js files
 app.use(express.static(path.join(__dirname, 'public')));
 
+//setting mongo session storage
+const mongoStorage = MongoStore.create({
+	url: db_url,
+	secret: 'sessionSecret',
+	touchAfter: 24 * 3600,
+});
+console.log(mongoStorage);
+
 //adding session to app
 const sessionConfig = {
+	mongoStorage,
 	name: 'session',
 	secret: 'sessionSecret',
 	resave: false,
