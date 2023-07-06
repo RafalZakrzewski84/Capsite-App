@@ -1,7 +1,7 @@
 /** @format */
 //access to env file with secret variables in dev mode
 if (process.env.NODE_ENV !== 'production') {
-	require('dotenv').config();
+  require('dotenv').config();
 }
 
 const express = require('express');
@@ -41,18 +41,19 @@ const localStrategy = require('passport-local');
 
 //connecting to mongoDB Atlas
 const db_url =
-	process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
+  process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
+console.log(db_url);
 mongoose.connect(db_url, {
-	//check these properties
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
+  //check these properties
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
 //notification if we are connected to db
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-	console.log('Database connected');
+  console.log('Database connected');
 });
 
 //express app
@@ -76,23 +77,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 //adding session to app
 const secret = process.env.SECRET || 'sessionAppSecret';
 const sessionConfig = {
-	store: MongoStore.create({
-		mongoUrl: db_url,
-		secret,
-		touchAfter: 24 * 3600,
-	}),
-	name: 'session',
-	secret,
-	resave: false,
-	saveUninitialized: true,
-	//adding cookies
-	cookie: {
-		httpOnly: true,
-		//secure: true,
-		//current day + 7 days in milliseconds
-		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-		maxAge: 1000 * 60 * 60 * 24 * 7,
-	},
+  store: MongoStore.create({
+    mongoUrl: db_url,
+    secret,
+    touchAfter: 24 * 3600,
+  }),
+  name: 'session',
+  secret,
+  resave: false,
+  saveUninitialized: true,
+  //adding cookies
+  cookie: {
+    httpOnly: true,
+    //secure: true,
+    //current day + 7 days in milliseconds
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
 };
 app.use(session(sessionConfig));
 
@@ -104,51 +105,51 @@ app.use(flash());
 app.use(helmet({ crossOriginEmbedderPolicy: false }));
 
 const scriptSrcUrls = [
-	'https://cdn.jsdelivr.net/',
-	'https://api.tiles.mapbox.com/',
-	'https://api.mapbox.com/',
-	'https://kit.fontawesome.com/',
-	'https://cdnjs.cloudflare.com/',
-	'https://cdn.jsdelivr.net',
-	'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
+  'https://cdn.jsdelivr.net/',
+  'https://api.tiles.mapbox.com/',
+  'https://api.mapbox.com/',
+  'https://kit.fontawesome.com/',
+  'https://cdnjs.cloudflare.com/',
+  'https://cdn.jsdelivr.net',
+  'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
 ];
 const styleSrcUrls = [
-	'https://kit-free.fontawesome.com/',
-	'https://cdn.jsdelivr.net/',
-	'https://api.mapbox.com/',
-	'https://api.tiles.mapbox.com/',
-	'https://fonts.googleapis.com/',
-	'https://use.fontawesome.com/',
-	'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
+  'https://kit-free.fontawesome.com/',
+  'https://cdn.jsdelivr.net/',
+  'https://api.mapbox.com/',
+  'https://api.tiles.mapbox.com/',
+  'https://fonts.googleapis.com/',
+  'https://use.fontawesome.com/',
+  'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
 ];
 const connectSrcUrls = [
-	'https://api.mapbox.com/',
-	'https://a.tiles.mapbox.com/',
-	'https://b.tiles.mapbox.com/',
-	'https://events.mapbox.com/',
-	'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
+  'https://api.mapbox.com/',
+  'https://a.tiles.mapbox.com/',
+  'https://b.tiles.mapbox.com/',
+  'https://events.mapbox.com/',
+  'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
 ];
 const fontSrcUrls = [];
 app.use(
-	helmet.contentSecurityPolicy({
-		directives: {
-			defaultSrc: [],
-			connectSrc: ["'self'", ...connectSrcUrls],
-			scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-			styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-			workerSrc: ["'self'", 'blob:'],
-			objectSrc: [],
-			imgSrc: [
-				"'self'",
-				'blob:',
-				'data:',
-				'https://res.cloudinary.com/dj9mlzzp1/',
-				'https://images.unsplash.com/',
-				'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
-			],
-			fontSrc: ["'self'", ...fontSrcUrls],
-		},
-	})
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", 'blob:'],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        'blob:',
+        'data:',
+        'https://res.cloudinary.com/dj9mlzzp1/',
+        'https://images.unsplash.com/',
+        'https://yelpcamp-git-zbhez.run-eu-central1.goorm.io/',
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  }),
 );
 
 //setting passport middleware for auth
@@ -162,13 +163,13 @@ passport.deserializeUser(User.deserializeUser());
 
 //setting middleware for use variables accessible in templates rendered with res.render
 app.use((req, res, next) => {
-	//variables for flash msg
-	res.locals.success = req.flash('success');
-	res.locals.error = req.flash('error');
+  //variables for flash msg
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
 
-	//variable for checking if user login
-	res.locals.currentUser = req.user;
-	next();
+  //variable for checking if user login
+  res.locals.currentUser = req.user;
+  next();
 });
 
 //$ and . characters are removed completely req.body,params,headers,query
@@ -176,7 +177,7 @@ app.use(mongoSanitize());
 
 //homepage
 app.get('/', (req, res) => {
-	res.render('home');
+  res.render('home');
 });
 
 //campgrounds routes
@@ -186,18 +187,18 @@ app.use('/', usersRoutes);
 
 //Error, if route doesn't match to paths above
 app.all('*', (req, res, next) => {
-	next(new ExpressError('Page Not Found', 404));
+  next(new ExpressError('Page Not Found', 404));
 });
 
 //error handling
 app.use((err, req, res, next) => {
-	const { statusCode = 500 } = err;
-	if (!err.message) err.message = 'Sth Went Wrong';
-	res.status(statusCode).render('error', { err });
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = 'Sth Went Wrong';
+  res.status(statusCode).render('error', { err });
 });
 
 const port = 3000;
 //process.env.PORT ||
 app.listen(port, () => {
-	console.log(`App is listening on ${port} port.`);
+  console.log(`App is listening on ${port} port.`);
 });
